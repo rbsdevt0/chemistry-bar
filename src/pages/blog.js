@@ -6,29 +6,33 @@ import Seo from '../components/seo'
 const BlogPage = ({ data }) => {
     return(
         <Layout pageTitle="Chemistry Bar Latest Update">
-            <p>My cool posts will go in here. We'll also post latest menu offers here.</p>
-            <ul>
-                {
-                    data.allFile.nodes.map(node => (
-                        <li key={node.name}>
-                            {node.name}
-                        </li>
-                    ))
-                }
-            </ul>
+           {
+        data.allMdx.nodes.map((node) => (
+          <article key={node.id}>
+            <h2>{node.frontmatter.title}</h2>
+            <p>Posted: {node.frontmatter.date}</p>
+            <p>{node.excerpt}</p>
+          </article>
+        ))
+      }
         </Layout>
     )
 }
 
 export const query = graphql`
 query{
-    allFile{
-        nodes{
-            name
+    allMdx(sort: {frontmatter: {date: DESC}}) {
+        nodes {
+          frontmatter {
+            date(formatString: "MMMMM D, YYYY")
+            title
+          }
+          id
+          excerpt
         }
-    }
+      }
 }`
 
-export const Head = () => <Seo title="Chemistry Bar Latest Update" />
+export const Head = () => <Seo title="Chemistry Bar Latest News" />
 
 export default BlogPage
