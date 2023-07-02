@@ -24,7 +24,7 @@ query{
     allMdx(sort: {frontmatter: {date: DESC}}) {
         nodes {
           frontmatter {
-            date(formatString: "MMMMM D, YYYY")
+            date(formatString: "MMMM D, YYYY")
             title
           }
           id
